@@ -316,6 +316,10 @@
     install_type: "{{ ocne_type if ocne_type is defined else (lookup('file', 'default_vars.yml') | from_yaml).ocne_type | default('none') }}"
   ansible.builtin.import_playbook: "deploy_ocne_{{ install_type }}.yml"
 
+- name: Provision Podman and Container Tools
+  ansible.builtin.import_playbook: provision_podman.yml
+  when: use_podman
+
 - name: Print instances
   hosts: all
   become: true
